@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"start": "forever index.js"
+	},
 	"dependencies": {
 		"express": "~4.12.2",
 		"mysql": "~2.5.5"
