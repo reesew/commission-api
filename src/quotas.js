@@ -1,7 +1,7 @@
 var mysql = require('./mysql');
 
 function findAll(callback) {
-    var queryText = "select rep, year, threshold from commission_quotas";
+    var queryText = "select rep, year, threshold, previous_year from commission_quotas";
     var params = [];
     mysql.query(
         queryText,
@@ -16,16 +16,17 @@ function resultsToQuotas(results) {
     var quota;
     var quotas = [];
     for (var i = 0; i < results.rows.length; i++) {
-        quota = new Quota(results.rows[i].rep, results.rows[i].year, results.rows[i].threshold);
+        quota = new Quota(results.rows[i].rep, results.rows[i].year, results.rows[i].threshold, results.rows[i].previous_year);
         quotas.push(quota);
     }
     return quotas;
 }
 
-function Quota(userId, year, threshold) {
+function Quota(userId, year, threshold, previousYear) {
     this.userId = userId;
     this.year = year;
     this.threshold = threshold;
+    this.previousYear = previousYear;
     this.getThreshold = function() {
         return this.threshold === 1;
     }
